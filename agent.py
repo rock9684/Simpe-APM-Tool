@@ -3,23 +3,15 @@ import time
 import json
 import boto3
 from datetime import datetime
+from config import Config
 
-ACCESS_KEY_ID = 'AKIA5332NEH3HYA6KL2B'
-SECRET_KEY = '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'
-REGION = 'us-east-1'
 MACHINEID = 'shi_pc'
-
-'''print(psutil.disk_usage('/'))
-print(psutil.disk_partitions())
-print(psutil.virtual_memory())
-
-print('\n')'''
 
 # lambda client
 lambda_client = boto3.client('lambda',
-            aws_access_key_id = ACCESS_KEY_ID,
-            aws_secret_access_key = SECRET_KEY,
-            region_name = REGION)
+            aws_access_key_id = Config.ACCESS_KEY_ID,
+            aws_secret_access_key = Config.SECRET_KEY,
+            region_name = Config.REGION)
 
 # data collection
 # cpu_util, mem_util, disk_util, all in percentage
