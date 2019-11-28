@@ -28,6 +28,8 @@ while True:
 	data['machineid'] = MACHINEID
 	json_data = json.dumps(data, sort_keys=True, default=str)
 
+	print(json_data)
+
 	# invoke lambda
 	response = lambda_client.invoke(FunctionName='testFunction', Payload= json_data)
 

@@ -1,5 +1,5 @@
 from app import webapp, db
-from app.helper import generate_presigned_url
+from app.helper import grab_metrics
 from flask import render_template, request, session, redirect, url_for, jsonify, flash
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
@@ -11,7 +11,8 @@ import csv
 @webapp.route('/', methods=['GET', 'POST'])
 @webapp.route('/home', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    result = grab_metrics(metric_name = 'cpu_util', machine_id = 'shi_pc')
+    return jsonify(result)
 
 @webapp.route('/worker_view/<instance_id>', methods=['GET'])
 def worker_view(instance_id):

@@ -10,7 +10,7 @@ class Config(object):
     USERNAME = 'ece1779_project'
     PASSWORD = 'ece1779_project_pass'
     HOSTNAME = 'ece1779-db.cr7yempg1jxm.us-east-1.rds.amazonaws.com'
-    DATABASE = 'ece1779_projcet'
+    DATABASE = 'ece1779_project'
     # Top level folder path
     TOP_FOLDER = dir_path
     # aws credentials
