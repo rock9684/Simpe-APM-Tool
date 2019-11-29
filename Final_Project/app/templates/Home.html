@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main_page.css') }}">
         <script type="text/javascript" src="{{ url_for('static', filename='flot/jquery.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='flot/jquery.flot.js') }}"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     </head>
 <body class="hero-image-none">
 
@@ -33,16 +34,9 @@
     </div>
     <div class="work-area" id="work-area">
         <div class="open-closebtn" id="open-closebtn" onclick="openNav()">&#9660;</div>
-        <div class="work-area-switcher" id="window_1" style="z-index: 2;">Overview</div>
-        <script>
-            var options = {
-                series: {
-                    lines: { show: true },
-                    points: { show: true }
-                }
-            };
-            $.plot($("#cpu_plot"), [ {{ metric_data }} ] , options);
-        </script>
+        <div class="work-area-switcher" id="window_1" style="z-index: 2;">Overview
+            <div id="plot_chart" ></div>
+        </div>
         <div class="work-area-switcher" id="window_2" style="z-index: 1;">
             <form action="/home_page" method="POST" enctype="multipart/form-data">{{ form.hidden_tag() }}
                  <div class="form-area" style="height:320px;width:550px;">
@@ -79,6 +73,17 @@
 
 
 <script>
+
+    var trace1 = {
+    x: {{ metric_data[0] }},
+    y: {{ metric_data[1] }},
+    type: 'scatter',
+    };
+    var data = [trace1];
+
+    Plotly.newPlot('plot_chart', data, {}, {showSendToCloud: true});
+/* Current Plotly.js version */
+
 var open_close;
 open_close=0;
 

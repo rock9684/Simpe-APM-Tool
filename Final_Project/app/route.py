@@ -12,7 +12,7 @@ import os
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
-from helper import grab_metrics
+from app.helper import grab_metrics
 import requests
 
 
