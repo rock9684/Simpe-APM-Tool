@@ -17,7 +17,7 @@ def grab_metrics(metric_name, machine_id):
 	cur = db.cursor()
 	cur.execute(
 		"SELECT `timestamp`, `metric_value` FROM metrics WHERE machineid = '%s' and metric_name = '%s' \
-		and timestamp > (now() - interval 30 minute);" % (machine_id, metric_name))
+		and timestamp >= 2625002;" % (machine_id, metric_name))
 
 	result = cur.fetchall()
 	cur.close()
