@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main_page.css') }}">
+    </head>
+<body class="hero-image-full">
+
+
+
+    <ul>
+        <li><a href='/login'>Logout</a></li>
+
+        <li><a class="active" href='/upload_page'>Upload</a></li>
+
+        <li><a href='/display'>Collection</a></li>
+
+    </ul>
+    <div style="height:100%;position: relative;">
+
+    <form action="/home_page" method="POST" enctype="multipart/form-data">{{ form.hidden_tag() }}
+    <div class="form-area" style="width:550px;">
+
+        <div class="text-box" style="font-size: 24px">Upload</div>
+        <div class="text-box" style="font-size: 12px">Browse Images and Select</div>
+        <br>
+        {{ form.upload(class="input100",id='browse')}}
+
+
+        {% if form.upload.errors %}
+        <div class="text-box" style="font-size: 12px;color:rgba(255,0,0, 1);">
+            {% for error in form.upload.errors %}
+                                    <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            <br>
+        {% endif %}
+
+        <br><br>
+        <div class="text-box" style="font-size: 12px">Accepted Formates GIF,PNG and JPEG </div>
+        <br><br>
+        <div class="text-box" style="font-size: 14px">{{ form.submit(class="yellow-button") }}<button class="grey-button" onclick="document.getElementById('browse').click();" >Browse</button></div>
+    </div></form>
+    </div>
+
+
+
+
+
+
+
+
+</body>
+</html>

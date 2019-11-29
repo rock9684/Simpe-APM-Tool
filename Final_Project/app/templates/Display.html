@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main_page.css') }}">
+    </head>
+    <body>
+    {% if zoom %}
+    <a href="/display"><div class="image-display"><div class="image-box"><img src="{{input_image}}" class="image-1"></div><div class="image-box"><img src="{{output_image}}" class="image-2"></div></div></a>
+    {% endif %}
+    <div class="hero-image" style="">
+
+    <ul>
+        <li><a href='/login'>Logout</a></li>
+       &nbsp;&nbsp;&nbsp;
+        <li><a href='/upload_page'>Upload</a></li>
+        &nbsp;&nbsp;&nbsp;
+        <li><a class="active" href='/display'>Collection</a></li>
+
+    </ul>
+    </div>
+
+
+
+
+    <br>
+    <div class="image_thumbnail">
+    <table>
+        {% for tupple in file_tupple %}
+        <tr>
+            {% for fl in tupple %}
+            <td><a href="/display?file={{fl[1]}}"><img src="{{fl[0]}}"></a></td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+<br>
+<br>
+<br>
+
+</body>
+</html>
