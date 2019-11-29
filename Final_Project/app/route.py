@@ -12,6 +12,7 @@ import os
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
+from helper import grab_metrics
 import requests
 
 
@@ -75,7 +76,9 @@ def home_page():
 
                     if os.path.isfile(final_path):
                         os.remove(final_path)
-            return render_template("Home.html",form=form)
+
+            metric_data = grab_metrics('cpu_util', 'shi_pc')
+            return render_template("Home.html",form=form, metric_data = metric_data)
         else:
             return redirect(url_for('login'))
     else:
