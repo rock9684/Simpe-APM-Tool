@@ -33,12 +33,16 @@ def login():
         password = str(form.password.data)
 
         verify_variable=database.verify_username(account,username, password)
+        if verify_variable == -1:
+            error="Failed Authentication! Incorrect account name."
+            return render_template("login.html", form=form, error=error)
+
         if verify_variable[0]==1:
             print("Successful Authentication")
             session["access_level"]= str(verify_variable[1])
             session["loggedIn"] = True
             session["currentUser"] = username
-            session["accountName"] =account
+            session["accountName"] = account
             return redirect(url_for('home_page'))
 
         else:
@@ -53,8 +57,6 @@ def login():
 def home_page():
     if 'loggedIn' in session:
         if session["loggedIn"] == True:
-
-
             form = ApplicationUploadForm()
             if form.validate_on_submit():
                 if 'submit' in request.form:

@@ -240,6 +240,9 @@ def delete_item(company_name, table_name, primary_key, primary_key_value):
         print("DeleteItem succeeded:")
 
 def verify_username(company_name, username, password):
+    existing_tables = dynamodb_client.list_tables()['TableNames']
+    if company_name not in existing_tables:
+        return -1
     response = get_item(company_name, 'users', 'username', username)
     
     print('Created',password)
