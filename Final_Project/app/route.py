@@ -11,7 +11,6 @@ from app import database
 from werkzeug.utils import secure_filename
 import os
 import time
-from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
 import requests
 
