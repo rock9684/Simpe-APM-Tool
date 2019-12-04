@@ -5,7 +5,14 @@
     </head>
     <body>
     {% if zoom %}
-    <a href="/display"><div class="image-display"><div class="image-box"><img src="{{input_image}}" class="image-1"></div><div class="image-box"><img src="{{output_image}}" class="image-2"></div></div></a>
+    <a href="/display">
+        <div class="image-display"><div class="image-box">
+            <img src="{{input_image}}" class="image-1"></div>
+            <div class="image-box">
+                <img src="{{output_image}}" class="image-2">
+            </div>
+        </div>
+    </a>
     {% endif %}
     <div class="hero-image" style="">
 

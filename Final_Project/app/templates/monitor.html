@@ -2,6 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main_page.css') }}">
+
     </head>
 <body class="hero-image-none">
 
@@ -30,7 +31,37 @@
     </div>
     <div class="work-area" id="work-area">
         <div class="open-closebtn" id="open-closebtn" onclick="openNav()">&#9660;</div>
-        <div class="work-area-switcher" id="window_1" style="z-index: 2;">Metric Browser</div>
+        <div class="work-area-switcher" id="window_1" style="z-index: 2;"><br><br>
+            <form action="/monitor_page" method="POST" enctype="multipart/form-data">
+                <div class="form-area" style="width:90%;">
+                    <div class="text-box" style="font-size: 24px; float:left;">Metric Browser</div><br>
+                    <br><br>
+                    <div class="dropdownContainer">
+                        <div class="text-box" style="font-size: 14px; float:left;">Application Name</div><br>
+                        {{ form.application(class="input200",style="width:200px; float:left;",placeholder="Select Application")}}
+                    </div>
+                    <div class="dropdownContainer">
+                        <div class="text-box" style="font-size: 14px; float:left;">Node Name</div><br>
+                        {{ form.node(class="input200",style="width:200px; float:left;",placeholder="Select Application")}}
+                    </div>
+                    <div class="dropdownContainer">
+                        <div class="text-box" style="font-size: 14px; float:left;">Metric Name</div><br>
+                        {{ form.metric(class="input200",style="width:200px; float:left;",placeholder="Select Application")}}
+                    </div>
+
+                    <div class="dropdownContainer" style="font-size: 14px; float:right;">
+                        <div class="text-box" style="font-size: 14px; float:left;"></div><br>
+                       {{ form.submit(class="yellow-button") }}
+                    </div>
+
+
+
+                </div>
+            </form>
+            <div id="plot_chart" ></div>
+
+
+        </div>
         <div class="work-area-switcher" id="window_2" style="z-index: 1;">Custom Query</div>
 
 
@@ -38,6 +69,7 @@
 
 
 <script>
+
 var open_close;
 open_close=0;
 

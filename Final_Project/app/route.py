@@ -1,7 +1,8 @@
 from flask import render_template, url_for, request, jsonify , flash, redirect, request,session
 from app import webapp, resources,bcrypt
 from app import AWS_SECRET_KEY, AWS_ACCESS_KEY
-from app.forms import LoginForm,RegistrationForm, ApplicationUploadForm
+from app.forms import LoginForm,RegistrationForm, ApplicationUploadForm, ApplicationSelection, addUser
+from app.forms import ResourceSelection
 import hashlib
 import datetime
 from app import databaseModule,database
@@ -12,7 +13,6 @@ import os
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
-from app.helper import grab_metrics
 import requests
 
 
@@ -33,16 +33,12 @@ def login():
         password = str(form.password.data)
 
         verify_variable=database.verify_username(account,username, password)
-        if verify_variable == -1:
-            error="Failed Authentication! Incorrect account name."
-            return render_template("login.html", form=form, error=error)
-
         if verify_variable[0]==1:
             print("Successful Authentication")
             session["access_level"]= str(verify_variable[1])
             session["loggedIn"] = True
             session["currentUser"] = username
-            session["accountName"] = account
+            session["accountName"] =account
             return redirect(url_for('home_page'))
 
         else:
@@ -57,12 +53,15 @@ def login():
 def home_page():
     if 'loggedIn' in session:
         if session["loggedIn"] == True:
+            form2 = ApplicationSelection()
+            form2.application.choices = [('1', 'Omo'),('2', 'Omo2')]
             form = ApplicationUploadForm()
+
+
             if form.validate_on_submit():
                 if 'submit' in request.form:
                     f=form.upload.data
                     application=str(form.application.data)
-
 
                     filename = secure_filename(f.filename)
 
@@ -70,17 +69,19 @@ def home_page():
                     temp=temp[:-1]
                     s='\\'
                     final_path=s.join(temp)
-                    file_path=final_path+"\\app\\static\\Input\\"
+                    file_path=final_path+"\\app\\static\\Applications\\"
                     file_name=session["accountName"] +'_'+application+ '_' + (str(time.time())).replace('.', '_') + '_' + filename
 
-                    final_path = os.path.join(webapp.root_path, 'static/Applications/' + file_name)
-                    f.save(final_path)
+                    final_paths = file_path + file_name
+                    print(final_paths)
+                    f.save(final_paths)
+                    node_data=resources.parse_applictaion_properties(final_paths)
+                    node_list=node_data["Node list"]
+                    for node in node_list:
+                        database.insert_into_nodes(str(session["accountName"]), int(node["Node ID"]), node["Node Type"], application)
+                        database.insert_into_applications(str(session["accountName"]),application,final_paths)
 
-                    if os.path.isfile(final_path):
-                        os.remove(final_path)
-
-            metric_data = grab_metrics('cpu_util', 'shi_pc')
-            return render_template("Home.html",form=form, metric_data = metric_data)
+            return render_template("Home.html",form=form,form2=form2)
         else:
             return redirect(url_for('login'))
     else:
@@ -88,10 +89,46 @@ def home_page():
 
 @webapp.route('/monitor_page', methods=['GET', 'POST'])
 def monitor_page():
-    return render_template("monitor.html")
+    if 'loggedIn' in session:
+        if session["loggedIn"] == True:
+            form = ResourceSelection()
+            form.application.choices = [('1', 'Omo'),('2', 'Omo2')]
+            form.node.choices = [('1', 'Omo'), ('2', 'Omo2')]
+            form.metric.choices = [('1', 'Omo'), ('2', 'Omo2')]
+
+
+
+            if form.validate_on_submit():
+                if 'submit' in request.form:
+                    a=0
+
+            return  render_template("monitor.html",form=form)
+        else:
+            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
+
 
 @webapp.route('/alert_page', methods=['GET', 'POST'])
 def alert_page():
+    if 'loggedIn' in session:
+        if session["loggedIn"] == True:
+            form = ResourceSelection()
+            form.application.choices = [('1', 'Omo'),('2', 'Omo2')]
+            form.node.choices = [('1', 'Omo'), ('2', 'Omo2')]
+            form.metric.choices = [('1', 'Omo'), ('2', 'Omo2')]
+
+
+
+            if form.validate_on_submit():
+                if 'submit' in request.form:
+                    a=0
+
+            return  render_template("alert.html",form=form)
+        else:
+            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
     return render_template("alert.html")
 
 @webapp.route('/dashboard_page', methods=['GET', 'POST'])
@@ -100,7 +137,14 @@ def dashboard_page():
 
 @webapp.route('/administrator_page', methods=['GET', 'POST'])
 def admin_page():
-    return render_template("administrator.html")
+    form=addUser()
+    list_user=[{'name':'Pranav Naidu','username':'pranav.naidu','password':'hello', 'access_level':'3'},
+               {'name':'Badriveer Thota','username':'badri','password':'hello', 'access_level':'1'},
+               {'name':'Kratagya Dixit','username':'kayD','password':'hello', 'access_level':'2'},
+               {'name':'Jenny Li','username':'jenny.li','password':'hello', 'access_level':'1'},
+               {'name':'Andy Birla','username':'andy.birla','password':'hello', 'access_level':'2'}]
+
+    return render_template("administrator.html",form=form,user_list=list_user)
 
 
 
