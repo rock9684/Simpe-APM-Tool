@@ -1,11 +1,11 @@
 from flask import render_template, url_for, request, jsonify , flash, redirect, request,session
-from app import webapp, resources,bcrypt
+from app import webapp
 from app import AWS_SECRET_KEY, AWS_ACCESS_KEY
 from app.forms import LoginForm,RegistrationForm, ApplicationUploadForm, ApplicationSelection, addUser
 from app.forms import ResourceSelection
 import hashlib
 import datetime
-from app import databaseModule,database
+from app import database
 
 
 from werkzeug.utils import secure_filename
@@ -166,7 +166,6 @@ def register_page():
             return render_template("register.html", form=form2, error=error)
         else:
 
-            #hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
             database.create_account(account)
             database.insert_into_users(account,'root',password,'3')
 
@@ -177,67 +176,4 @@ def register_page():
 
 
     return render_template("register.html", form=form2,error="")
-
-@webapp.route('/api/register', methods=['POST'])
-def add_user():
-    error = []
-    if ('username' in request.args) and ('password' in request.args):
-        username= str(request.args['username'])
-        password=str(request.args['password'])
-        if len(username)>=4 and len(username)<=100:
-            pass
-        else:
-            error.append("Error: Invalid Username (Username Length 4-100 charecters)")
-        if len(password)>=4 and len(password)<=20:
-            pass
-        else:
-            error.append("Error: Invalid Password (Password Length 4-20 charecters)")
-        if len(error)==0:
-            hashed_password=bcrypt.generate_password_hash(password).decode('utf-8')
-            check=databaseModule.verify_username_password(username, hashed_password)
-            if check == -1:
-                databaseModule.insert_user_database(username, hashed_password)
-            else:
-                error.append("Error: Username Already Exist")
-        operation_done=databaseModule.verify_username_password(username,password)
-        if operation_done!=1:
-            error.append("Error: User Not Added to Database")
-    elif ('username' in request.form) and ('password' in request.form):
-        username = str(request.form['username'])
-        password = str(request.form['password'])
-        if len(username) >= 4 and len(username) <= 100:
-            pass
-        else:
-            error.append("Error: Invalid Username (Username Length 4-100 charecters)")
-        if len(password) >= 4 and len(password) <= 20:
-            pass
-        else:
-            error.append("Error: Invalid Password (Password Length 4-20 charecters)")
-        if len(error) == 0:
-            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-            check = databaseModule.verify_username_password(username, hashed_password)
-            if check == -1:
-                databaseModule.insert_user_database(username, hashed_password)
-            else:
-                error.append("Error: Username Already Exist")
-        operation_done = databaseModule.verify_username_password(username, password)
-        if operation_done != 1:
-            error.append("Error: User Not Added to Database")
-
-
-    else:
-        error.append("Error: Missing Parameter")
-
-
-    if len(error)==0:
-        statusCode=201
-        error.append("Success: User created")
-    else:
-        if ("Error: Invalid Password (Password Length 4-100 charecters)" in error) or ("Error: Invalid Password (Password Length 4-20 charecters)" in error):
-            statusCode = 406
-        elif "Error: Username Already Exist" in error:
-            statusCode = 406
-        else:
-            statusCode =500
-    return jsonify(error=error),statusCode
 

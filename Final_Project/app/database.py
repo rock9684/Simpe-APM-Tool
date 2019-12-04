@@ -1,7 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError
-from app import bcrypt
-
+import hashlib, uuid
 
 
 
@@ -152,15 +151,16 @@ def get_item(company_name, table_name, primary_key, primary_key_value):
 
 
 ### Inserting in all the tables - uses insert_into_table
-def insert_into_users(company_name, username, password, access):
+def insert_into_users(company_name, username, password, access, name):
     table_name = get_table_name(company_name, 'users')
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
     print('Created',password)
     print('Hashed',hashed_password)
     data = {
         'username': username,
         'password': hashed_password,
-        'access': access
+        'access': access,
+        'name': name
     }
     insert_into_table(table_name, data)
 
@@ -180,11 +180,12 @@ def insert_into_nodes(company_name, node_ID, application_name):
     }
     insert_into_table(table_name, data)
 
-def insert_into_alerts(company_name, alert_ID, node_ID, query):
+def insert_into_alerts(company_name, alert_ID, node_ID, description, query):
     table_name = get_table_name(company_name, 'alerts')
     data = {
         'alert_ID': alert_ID,
         'node_ID': node_ID,
+        'description': description,
         'query': query
     }
     insert_into_table(table_name, data)
@@ -249,20 +250,23 @@ def verify_username(company_name, username, password):
     if 'Item' not in response:
         print('Invalid company name')
         return(0,0)
-    item = response['Item']
+    print(response['Item'])
+    print('Entered password: ', password)
     response = get_item(company_name, 'users', 'username', username)
-    
-    print('Created',password)
     password2 = response['password']
-    validate = bcrypt.check_password_hash(password2, password)
-    return (1,response['access']) if validate else (0,0)
+    validate_password = hashlib.sha256(password.encode()).hexdigest()
+    print('Hashed entered password: ', validate_password)
+    print('Password in DB: ', password2)
+    return (1,response['access']) if password2 == validate_password else (0,0)
+
+
 
 
 # Accounts - AccountName
-# Users - username, password, access
+# Users - username, password, access, name
 # Application - application ID, file
 # Nodes - nodeID, application ID
-# Alerts - ID, node, sql query
+# Alerts - ID, node, description, sql query
 # Action Group - ID, action
 # Policy - ID, Action group ID, Alerts
 # Widgets - widget ID, dashboard, SQL query

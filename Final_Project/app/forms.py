@@ -2,7 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField ,SelectField
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from app import databaseModule
 
 
 class LoginForm(FlaskForm):
@@ -18,8 +17,6 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
-    def validateAccountname(self, accountname):
-        return databaseModule.verify_account(accountname)
 
 
 class ApplicationUploadForm(FlaskForm):

@@ -1,4 +1,3 @@
-from imutils.object_detection import non_max_suppression
 from operator import itemgetter
 import mysql.connector
 
