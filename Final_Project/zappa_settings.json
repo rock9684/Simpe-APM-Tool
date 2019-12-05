@@ -1,10 +1,10 @@
 {
     "dev": {
-        "app_function": "app.__init__.webapp",
+        "app_function": "app.route.webapp",
         "aws_region": "us-east-1",
         "profile_name": "default",
         "project_name": "final-project",
         "runtime": "python3.6",
-        "s3_bucket": "zappa-40s43uu9o"
+        "s3_bucket": "zappa-ni4iip47a"
     }
 }

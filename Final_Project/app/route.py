@@ -1,6 +1,13 @@
+from flask import Flask
+
+webapp= Flask(__name__)
+
+webapp.config['SECRET_KEY'] = "c7e22c3ba94bd20390e19e9954796d8b"
+
+AWS_ACCESS_KEY = 'AKIAIJK4UQ7KTGQZY4OQ'
+AWS_SECRET_KEY = '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'
+
 from flask import render_template, url_for, request, jsonify , flash, redirect, request,session
-from app import webapp
-from app import AWS_SECRET_KEY, AWS_ACCESS_KEY
 from app.forms import LoginForm,RegistrationForm, ApplicationUploadForm, ApplicationSelection, addUser
 from app.forms import ResourceSelection
 import hashlib
@@ -64,11 +71,11 @@ def home_page():
 
                     filename = secure_filename(f.filename)
 
-                    temp=(webapp.instance_path).split('\\')
+                    temp=(webapp.instance_path).split('/')
                     temp=temp[:-1]
-                    s='\\'
+                    s='/'
                     final_path=s.join(temp)
-                    file_path=final_path+"\\app\\static\\Applications\\"
+                    file_path=final_path+"/app/static/Applications/"
                     file_name=session["accountName"] +'_'+application+ '_' + (str(time.time())).replace('.', '_') + '_' + filename
 
                     final_paths = file_path + file_name
@@ -80,7 +87,7 @@ def home_page():
                         database.insert_into_nodes(str(session["accountName"]), int(node["Node ID"]), node["Node Type"], application)
                         database.insert_into_applications(str(session["accountName"]),application,final_paths)
 
-            return render_template("Home.html",form=form,form2=form2)
+            return render_template("home.html",form=form,form2=form2)
         else:
             return redirect(url_for('login'))
     else:
