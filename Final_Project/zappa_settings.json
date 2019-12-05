@@ -5,6 +5,6 @@
         "profile_name": "default",
         "project_name": "final-project",
         "runtime": "python3.6",
-        "s3_bucket": "zappa-wh1a3tx8q"
+        "s3_bucket": "zappa-40s43uu9o"
     }
 }
