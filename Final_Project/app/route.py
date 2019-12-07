@@ -142,7 +142,7 @@ def dashboard_page():
     return render_template("dashboard.html")
 
 @webapp.route('/administrator_page', methods=['GET', 'POST'])
-def admin_page():
+def administrator_page():
     form=addUser()
     list_user=[{'name':'Pranav Naidu','username':'pranav.naidu','password':'hello', 'access_level':'3'},
                {'name':'Badriveer Thota','username':'badri','password':'hello', 'access_level':'1'},

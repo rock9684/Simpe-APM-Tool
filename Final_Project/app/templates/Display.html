@@ -5,7 +5,7 @@
     </head>
     <body>
     {% if zoom %}
-    <a href="/display">
+    <a href="{{url_for('display')}}">
         <div class="image-display"><div class="image-box">
             <img src="{{input_image}}" class="image-1"></div>
             <div class="image-box">
@@ -17,11 +17,11 @@
     <div class="hero-image" style="">
 
     <ul>
-        <li><a href='/login'>Logout</a></li>
+        <li><a href="{{url_for('login')}}">Logout</a></li>
        &nbsp;&nbsp;&nbsp;
-        <li><a href='/upload_page'>Upload</a></li>
+        <li><a href="{{url_for('upload_page')}}">Upload</a></li>
         &nbsp;&nbsp;&nbsp;
-        <li><a class="active" href='/display'>Collection</a></li>
+        <li><a class="active" href="{{url_for('display')}}">Collection</a></li>
 
     </ul>
     </div>
@@ -35,7 +35,7 @@
         {% for tupple in file_tupple %}
         <tr>
             {% for fl in tupple %}
-            <td><a href="/display?file={{fl[1]}}"><img src="{{fl[0]}}"></a></td>
+            <td><a href="/dev/display?file={{fl[1]}}"><img src="{{fl[0]}}"></a></td>
             {% endfor %}
         </tr>
         {% endfor %}

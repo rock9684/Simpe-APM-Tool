@@ -9,17 +9,17 @@
 
 
     <ul>
-        <li><a href= '/login'>Logout</a></li>
+        <li><a href= "{{url_for('login')}}">Logout</a></li>
 
-        <li><a href='/administrator_page'>Administrator</a></li>
+        <li><a href="{{url_for('administrator_page')}}">Administrator</a></li>
 
-        <li><a href='/dashboard_page'>Dashboard</a></li>
+        <li><a href="{{url_for('dashboard_page')}}">Dashboard</a></li>
 
-        <li><a href='/alert_page'>Alerts</a></li>
+        <li><a href="{{url_for('alert_page')}}">Alerts</a></li>
 
-        <li><a class="active"  href='/monitor_page'>Monitoring</a></li>
+        <li><a class="active"  href="{{url_for('monitor_page')}}">Monitoring</a></li>
 
-        <li><a href='/home_page'>Home</a></li>
+        <li><a href="{{url_for('home_page')}}">Home</a></li>
 
 
     </ul>
@@ -32,7 +32,7 @@
     <div class="work-area" id="work-area">
         <div class="open-closebtn" id="open-closebtn" onclick="openNav()">&#9660;</div>
         <div class="work-area-switcher" id="window_1" style="z-index: 2;"><br><br>
-            <form action="/monitor_page" method="POST" enctype="multipart/form-data">
+            <form action="{{url_for('monitor_page')}}" method="POST" enctype="multipart/form-data">
                 <div class="form-area" style="width:90%;">
                     <div class="text-box" style="font-size: 24px; float:left;">Metric Browser</div><br>
                     <br><br>

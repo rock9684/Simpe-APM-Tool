@@ -8,16 +8,16 @@
 
 
     <ul>
-        <li><a href='/login'>Logout</a></li>
+        <li><a href="{{url_for('login')}}">Logout</a></li>
 
-        <li><a class="active" href='/upload_page'>Upload</a></li>
+        <li><a class="active" href="{{url_for('upload_page')}}">Upload</a></li>
 
-        <li><a href='/display'>Collection</a></li>
+        <li><a href="{{url_for('display')}}">Collection</a></li>
 
     </ul>
     <div style="height:100%;position: relative;">
 
-    <form action="/home_page" method="POST" enctype="multipart/form-data">{{ form.hidden_tag() }}
+    <form action="{{url_for('home_page')}}" method="POST" enctype="multipart/form-data">{{ form.hidden_tag() }}
     <div class="form-area" style="width:550px;">
 
         <div class="text-box" style="font-size: 24px">Upload</div>

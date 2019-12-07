@@ -11,17 +11,18 @@
 
 
     <ul>
-        <li><a href= '/login'>Logout</a></li>
+        <li><a href= "{{url_for('login')}}">Logout</a></li>
 
-        <li><a href='/administrator_page'>Administrator</a></li>
+        <li><a href="{{url_for('administrator_page')}}">Administrator</a></li>
 
-        <li><a href='/dashboard_page'>Dashboard</a></li>
+        <li><a href="{{url_for('dashboard_page')}}">Dashboard</a></li>
 
-        <li><a href='/alert_page'>Alerts</a></li>
+        <li><a href="{{url_for('alert_page')}}">Alerts</a></li>
 
-        <li><a href='/monitor_page'>Monitoring</a></li>
+        <li><a class="active"  href="{{url_for('monitor_page')}}">Monitoring</a></li>
 
-        <li><a class="active" href='/home_page'>Home</a></li>
+        <li><a href="{{url_for('home_page')}}">Home</a></li>
+
 
 
     </ul>
@@ -35,7 +36,7 @@
     <div class="work-area" id="work-area">
         <div class="open-closebtn" id="open-closebtn" onclick="openNav()">&#9660;</div>
         <div class="work-area-switcher" id="window_1" style="z-index: 2;">
-            <form action="/home_page" method="POST" enctype="multipart/form-data"><br><br>
+            <form action="{{url_for('home_page')}}" method="POST" enctype="multipart/form-data"><br><br>
                 <div class="form-area" style="width:90%;">
                     <div class="text-box" style="font-size: 24px; float:left;">Application Overview</div><br>
                     <br><br>
@@ -58,7 +59,7 @@
 
         </div>
         <div class="work-area-switcher" id="window_2" style="z-index: 1;">
-            <form action="/home_page" method="POST" enctype="multipart/form-data">{{ form.hidden_tag() }}
+            <form action="{{url_for('home_page')}}" method="POST" enctype="multipart/form-data">{{ form.hidden_tag() }}
                  <div class="form-area" style="height:320px;width:550px;">
 
                  <div class="text-box" style="font-size: 24px">Create New Application</div>

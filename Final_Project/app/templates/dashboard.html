@@ -8,17 +8,17 @@
 
 
     <ul>
-        <li><a href= '/login'>Logout</a></li>
+        <li><a href= "{{url_for('login')}}">Logout</a></li>
 
-        <li><a href='/administrator_page'>Administrator</a></li>
+        <li><a href="{{url_for('administrator_page')}}">Administrator</a></li>
 
-        <li><a class="active"  href='/dashboard_page'>Dashboard</a></li>
+        <li><a href="{{url_for('dashboard_page')}}">Dashboard</a></li>
 
-        <li><a href='/alert_page'>Alerts</a></li>
+        <li><a href="{{url_for('alert_page')}}">Alerts</a></li>
 
-        <li><a href='/monitor_page'>Monitoring</a></li>
+        <li><a class="active"  href="{{url_for('monitor_page')}}">Monitoring</a></li>
 
-        <li><a href='/home_page'>Home</a></li>
+        <li><a href="{{url_for('home_page')}}">Home</a></li>
 
 
     </ul>
