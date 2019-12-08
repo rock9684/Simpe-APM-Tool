@@ -1,7 +1,7 @@
 import boto3
 from botocore.exceptions import ClientError
 import hashlib, uuid
-
+from boto3.dynamodb.conditions import Key, Attr
 
 
 ########################################################################
@@ -11,7 +11,7 @@ import hashlib, uuid
 #   insert_into_<table_name>(company_name, other_fields_in_table)
 #   delete_item(company_name, table_name, primary_key, primary_key_value)
 #   get_item(company_name, table_name, primary_key, primary_key_value)
-#
+#   retrieve_items(company_name, table_name, **kwargs)
 ########################################################################
 
 AWS_ACCESS_KEY_ID = 'AKIAIJK4UQ7KTGQZY4OQ'
@@ -259,8 +259,53 @@ def verify_username(company_name, username, password):
     print('Password in DB: ', password2)
     return (1,response['access']) if password2 == validate_password else (0,0)
 
+def retrieve_items(company_name, table_name, **kwargs):
+    table_name = get_table_name(company_name, table_name)
+    print('Table name: ', table_name)
+    numArgs = len(kwargs)
+    if numArgs == 1:
+        return retrieve_one(table_name, kwargs)
+    elif numArgs == 2:
+        return retrieve_two(table_name, kwargs)
+    else:
+        return retrieve_three(table_name, kwargs)
 
 
+def retrieve_one(table_name, kwargs):
+    table = dynamodb.Table(table_name)
+    keys, values = [], []
+    for key, val in kwargs.items():
+        keys.append(key)
+        values.append(val)
+    print(keys, values)
+    response = table.scan(
+        FilterExpression=Attr(str(keys[0])).eq(str(values[0]))
+    )
+    return response['Items']
+
+def retrieve_two(table_name, kwargs):
+    table = dynamodb.Table(table_name)
+    keys, values = [], []
+    for key, val in kwargs.items():
+        keys.append(key)
+        values.append(val)
+    print(keys, values)
+    response = table.scan(
+        FilterExpression=Attr(str(keys[0])).eq(str(values[0])) & Attr(str(keys[1])).eq(str(values[1]))
+    )
+    return response['Items']
+
+def retrieve_three(table_name, kwargs):
+    table = dynamodb.Table(table_name)
+    keys, values = [], []
+    for key, val in kwargs.items():
+        keys.append(key)
+        values.append(val)
+    print(keys, values)
+    response = table.scan(
+        FilterExpression=Attr(str(keys[0])).eq(str(values[0])) & Attr(str(keys[1])).eq(str(values[1])) & Attr(str(keys[2])).eq(str(values[2]))
+    )
+    return response['Items']
 
 # Accounts - AccountName
 # Users - username, password, access, name
