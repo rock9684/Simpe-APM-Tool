@@ -11,9 +11,11 @@ class Config(object):
     PASSWORD = 'ece1779_project_pass'
     HOSTNAME = 'ece1779-db.cr7yempg1jxm.us-east-1.rds.amazonaws.com'
     DATABASE = 'ece1779_project'
+    
     # Top level folder path
     TOP_FOLDER = dir_path
+
     # aws credentials
-    ACCESS_KEY_ID = 'AKIA5332NEH3HYA6KL2B'
-    SECRET_KEY = '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'
+    ACCESS_KEY_ID = 'AKIAIJK4UQ7KTGQZY4OQ'
+    SECRET_KEY = '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'
     REGION = 'us-east-1'

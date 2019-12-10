@@ -23,7 +23,7 @@ boto_session = boto3.Session(aws_access_key_id=AWS_ACCESS_KEY_ID,
 
 dynamodb = boto_session.resource('dynamodb')
 dynamodb_client = boto_session.client('dynamodb')
-
+s3_client = boto_session.client('s3')
 #Helper
 def get_table_name(company_name, table_name):
     return company_name + '_' + table_name
@@ -63,7 +63,7 @@ def create_table(name, primary_key, primary_key_type):
     return
 
 
-# Registers a new account and creates corresponding tables
+# Registers a new account and creates corresponding tables, creates an empty S3 bucket for the company
 def create_account(name):
     current_tables = dynamodb_client.list_tables()['TableNames']
     #runs the first time to create an Accounts table
@@ -108,8 +108,13 @@ def create_account(name):
     policy_table_name = get_table_name(name, 'dashboards')
     create_table(policy_table_name, 'dashboard_ID', 'N')
 
+    events_table_name = get_table_name(name, 'events')
+    create_table(events_table_name, '')
     print('Initialized tables for new account')
-
+    print('Creating S3 bucket')
+    bucket_name = name
+    s3_client.create_bucket(Bucket=bucket_name)
+    print('Finished creating new bucket')
 
 def insert_into_table(table_name, data): # (string, dict) -> None
     table = dynamodb.Table(table_name)
@@ -313,6 +318,6 @@ def retrieve_three(table_name, kwargs):
 # Nodes - nodeID, application ID
 # Alerts - ID, node, description, sql query
 # Action Group - ID, action
-# Policy - ID, Action group ID, Alerts
+# Policy - ID, group ID, Alerts
 # Widgets - widget ID, dashboard, SQL query
 # Dashboard - ID
