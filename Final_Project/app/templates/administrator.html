@@ -14,13 +14,13 @@
     <ul>
         <li><a href= "{{url_for('login')}}">Logout</a></li>
 
-        <li><a href="{{url_for('administrator_page')}}">Administrator</a></li>
+        <li><a class="active" href="{{url_for('admin_page')}}">Administrator</a></li>
 
-        <li><a href="{{url_for('dashboard_page')}}">Dashboard</a></li>
+        <li><a  href="{{url_for('dashboard_page')}}">Dashboard</a></li>
 
         <li><a href="{{url_for('alert_page')}}">Alerts</a></li>
 
-        <li><a class="active"  href="{{url_for('monitor_page')}}">Monitoring</a></li>
+        <li><a href="{{url_for('monitor_page')}}">Monitoring</a></li>
 
         <li><a href="{{url_for('home_page')}}">Home</a></li>
 
@@ -40,7 +40,7 @@
 <div class="work-area" style="width:80%;overflow:hidden">
     <br><br>
      <div class="form-area" style="width:90%;">
-
+        <form style="height: 100%;" action="/administrator_page" method="POST" enctype="multipart/form-data">
                     <div class="text-box" style="font-size: 24px; float:left;">User Information</div><br>
                     <br>
                     <div class="text-box">
@@ -83,9 +83,7 @@
                     </div>
                     </div>
 
-
-
-
+        </form>
      </div>
 </div>
 
@@ -100,6 +98,9 @@
 
 
     }
+
+
+
 
     function OpenClose(){
     if (open_flag==1){

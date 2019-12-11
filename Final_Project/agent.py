@@ -6,7 +6,7 @@ import math
 from datetime import datetime
 from config import Config
 
-MACHINEID = 'shi_pc'
+MACHINEID = 2
 
 # lambda client
 lambda_client = boto3.client('lambda',

@@ -109,7 +109,8 @@ def create_account(name):
     create_table(policy_table_name, 'dashboard_ID', 'N')
 
     events_table_name = get_table_name(name, 'events')
-    create_table(events_table_name, '')
+    create_table(events_table_name, 'time_alert', 'S')
+
     print('Initialized tables for new account')
     print('Creating S3 bucket')
     bucket_name = name
@@ -177,10 +178,11 @@ def insert_into_applications(company_name, application_name, file_):
     }
     insert_into_table(table_name, data)
 
-def insert_into_nodes(company_name, node_ID, application_name):
+def insert_into_nodes(company_name, node_ID, node_type, application_name):
     table_name = get_table_name(company_name, 'nodes')
     data = {
         'node_ID': node_ID,
+        'node_type': node_type,
         'application_name': application_name
     }
     insert_into_table(table_name, data)
@@ -195,10 +197,11 @@ def insert_into_alerts(company_name, alert_ID, node_ID, description, query):
     }
     insert_into_table(table_name, data)
     
-def insert_into_action_group(company_name, group_ID, action):
+def insert_into_action_group(company_name, group_ID, group_name, action):
     table_name = get_table_name(company_name, 'action_group')
     data = {
         'group_ID': group_ID,
+        'group_name': group_name,
         'action': action
     }
     insert_into_table(table_name, data)
@@ -221,10 +224,11 @@ def insert_into_widgets(company_name, widget_ID, dashboard_ID, query):
     }
     insert_into_table(table_name, data)
 
-def insert_into_dashboards(company_name, dashboard_ID):
+def insert_into_dashboards(company_name, dashboard_ID, dashboard_name):
     table_name = get_table_name(company_name, 'dashboards')
     data = {
-        'dashboard_ID': dashboard_ID
+        'dashboard_ID': dashboard_ID,
+        'dashboard_name': dashboard_name
     }
     insert_into_table(table_name, data)
 
@@ -312,6 +316,11 @@ def retrieve_three(table_name, kwargs):
     )
     return response['Items']
 
+def scan(company_name, table_name):
+    table_name = get_table_name(company_name, table_name)
+    table = dynamodb.Table(table_name)
+    response = table.scan()
+    return response['Items']
 # Accounts - AccountName
 # Users - username, password, access, name
 # Application - application ID, file
