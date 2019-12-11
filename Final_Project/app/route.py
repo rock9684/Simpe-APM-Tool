@@ -149,6 +149,11 @@ def monitor_page():
 @webapp.route('/alert_page', methods=['GET', 'POST'])
 def alert_page():
     if 'loggedIn' in session:
+        response = database.get_item(str(session['accountName']), 'users', 'username', str(session['currentUser']))
+        access_level = int(response['access'])
+        if access_level < 2:
+            flash('You do not have permissions to access that page!', 'danger')
+            return redirect(url_for('dashboard_page'))
         if session["loggedIn"] == True:
             node_list = database.scan(str(session['accountName']), 'nodes')
             for node in node_list:

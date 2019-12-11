@@ -24,10 +24,12 @@ while True:
 	mem_util = mem_util.percent
 	disk_util = psutil.disk_usage('/')
 	disk_util = disk_util.percent
+	company_name = 'testAccount'
 	data['timestamp'] = time_stamp
 	data['metric_names'] = ['cpu_util', 'mem_util', 'disk_util']
 	data['metric_values'] = [cpu_util, mem_util, disk_util]
 	data['machineid'] = MACHINEID
+	data['company_name'] = company_name
 	json_data = json.dumps(data, sort_keys=True, default=str)
 
 	print(json_data)

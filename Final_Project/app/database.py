@@ -109,7 +109,7 @@ def create_account(name):
     create_table(policy_table_name, 'dashboard_ID', 'N')
 
     events_table_name = get_table_name(name, 'events')
-    create_table(events_table_name, 'time_alert', 'S')
+    create_table(events_table_name, 'timestamp_alert', 'S')
 
     print('Initialized tables for new account')
     print('Creating S3 bucket')

@@ -64,7 +64,7 @@ def graph_data(application,node,metric_name,time_before=10):
     time_now = time.time()/60
     time_beyond = time_now - time_before
 
-    query_template= "SELECT timestamp, metric_value FROM metrics WHERE machineid = '%s' and metric_name = '%s' AND timestamp >= 0;" % (machine_id, metric_name)
+    query_template= "SELECT timestamp, metric_value FROM metrics WHERE machineid = '%s' and metric_name = '%s' AND timestamp >= '%s';" % (machine_id, metric_name, time_beyond)
     print(query_template)
     return (query_template,query_rds(query_template))
 

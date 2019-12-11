@@ -147,7 +147,7 @@ box-sizing: border-box;
 
 .hero-image-full {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
-  background-image: linear-gradient(rgba(70,52,78, 0.7), rgba(70,52,78, 0.7)),url(/static/img/background.jpg);
+  background-image: linear-gradient(rgba(70,52,78, 0.7), rgba(70,52,78, 0.7)),url(static/img/background.jpg);
 
   width: 100%;
   /* Set a specific height */
