@@ -21,7 +21,7 @@ class RegistrationForm(FlaskForm):
     def validateAccountname(self, accountname):
         #return databaseModule.verify_account(accountname)
         #change to dynamo
-        pass
+        return 1
 
 class ApplicationUploadForm(FlaskForm):
     application = StringField('Application', validators=[DataRequired(), Length(min=4, max=100)])

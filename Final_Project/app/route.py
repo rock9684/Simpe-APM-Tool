@@ -50,6 +50,7 @@ def home_page():
         if session["loggedIn"] == True:
             form2 = ApplicationSelection()
             application_list = database.scan(str(session["accountName"]), 'applications')
+            event_list = database.scan(str(session['accountName']), 'events')
             form2.application.choices = []
             for app in application_list:
                 form2.application.choices.append((app['application_name'],app['application_name']))
@@ -79,7 +80,7 @@ def home_page():
                         database.insert_into_nodes(str(session["accountName"]), int(node["node_ID"]), node["node_type"], application)
                         database.insert_into_applications(str(session["accountName"]),application,final_paths)
 
-            return render_template("home.html",form=form,form2=form2, account=account)
+            return render_template("home.html",form=form,form2=form2, account=account, event_list = event_list)
         else:
             return redirect(url_for('login'))
     else:

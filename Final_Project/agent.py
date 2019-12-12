@@ -7,7 +7,9 @@ from datetime import datetime
 from config import Config
 
 MACHINEID = 2
-
+def convert_unix_to_utc(unix_in_min):
+	ts = int(unix_in_min * 60)
+	return datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 # lambda client
 lambda_client = boto3.client('lambda',
             aws_access_key_id = Config.ACCESS_KEY_ID,
@@ -30,6 +32,7 @@ while True:
 	data['metric_values'] = [cpu_util, mem_util, disk_util]
 	data['machineid'] = MACHINEID
 	data['company_name'] = company_name
+	data['time_date'] = convert_unix_to_utc(time_stamp)
 	json_data = json.dumps(data, sort_keys=True, default=str)
 
 	print(json_data)
