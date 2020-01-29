@@ -7,10 +7,10 @@ import time
 from operator import itemgetter
 import mysql.connector
 
-USERNAME = 'ece1779_project'
-PASSWORD = 'ece1779_project_pass'
-HOSTNAME = 'ece1779-db.cr7yempg1jxm.us-east-1.rds.amazonaws.com'
-DATABASE = 'ece1779_project'
+USERNAME = ''
+PASSWORD = ''
+HOSTNAME = ''
+DATABASE = ''
 
 
 # query last 30 minutes data

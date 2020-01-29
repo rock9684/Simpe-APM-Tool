@@ -14,8 +14,8 @@ from boto3.dynamodb.conditions import Key, Attr
 #   retrieve_items(company_name, table_name, **kwargs)
 ########################################################################
 
-AWS_ACCESS_KEY_ID = 'AKIAIJK4UQ7KTGQZY4OQ'
-AWS_SECRET_KEY = '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'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_KEY = ''
 
 boto_session = boto3.Session(aws_access_key_id=AWS_ACCESS_KEY_ID,
                             aws_secret_access_key=AWS_SECRET_KEY,
